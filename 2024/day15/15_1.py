@@ -1,4 +1,4 @@
-def simulate_warehouse(map_data):
+def simulate_warehouse(map_data, moves):
     directions = {'^': (-1, 0), 'v': (1, 0), '<': (0, -1), '>': (0, 1)}
 
     robot_pos = None
@@ -20,19 +20,24 @@ def simulate_warehouse(map_data):
             if map_data[r][c] == '.':
                 robot_pos = new_robot_pos
             elif map_data[r][c] == 'O':
-                box_r, box_c = r + dr, c + dc
+                box_r, box_c = r, c
                 while 0 <= box_r < len(map_data) and 0 <= box_c < len(map_data[0]) and map_data[box_r][box_c] == 'O':
                     next_box_r, next_box_c = box_r + dr, box_c + dc
+                    
                     if 0 <= next_box_r < len(map_data) and 0 <= next_box_c < len(map_data[0]) and map_data[next_box_r][next_box_c] == '.':
                         map_data[next_box_r][next_box_c] = 'O'
                         map_data[box_r][box_c] = '.'
-                        box_r, box_c = next_box_r, next_box_c
-                    else:
                         break
 
+                    box_r, box_c = next_box_r, next_box_c
+
                 robot_pos = new_robot_pos
-                
-    print(map_data)
+        print(robot_pos)
+        print(move)
+        for i in range(len(map_data)):
+            print(map_data[i])
+        
+        print()
 
     gps_sum = 0
     for i in range(len(map_data)):
@@ -52,7 +57,7 @@ if __name__ == "__main__":
             moves = line.strip()
         else:
             map_data.append(list(line.strip()))
-
-    res = simulate_warehouse(map_data)
+    
+    res = simulate_warehouse(map_data, moves)
 
     print(res)
